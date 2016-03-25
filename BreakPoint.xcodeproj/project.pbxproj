@@ -328,6 +328,7 @@
 				F8C960D81CA4E26E0098ECD2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
