@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 #
 
 s.name         = "BreakPoint"
-s.version      = "1.0.0"
+s.version      = "1.0.1"
 s.summary      = "Objective-C断点续传"
 
 # This description is used to generate tags and improve search results.
@@ -80,7 +80,7 @@ s.platform     = :ios, "7.0"
 #  Supports git, hg, bzr, svn and HTTP.
 #
 
-s.source       = { :git => "https://github.com/whde/BreakPoint.git", :tag => "1.0.0" }
+s.source       = { :git => "https://github.com/whde/BreakPoint.git", :tag => s.version.to_s }
 
 
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -91,7 +91,7 @@ s.source       = { :git => "https://github.com/whde/BreakPoint.git", :tag => "1.
 #  Not including the public_header_files will make all headers public.
 #
 
-s.source_files  = "Classes", "BreakPoint/Whde/*.{h, m}"
+s.source_files  = "Classes", "BreakPoint/Whde/*"
 # s.exclude_files = "Classes/Exclude"
 
 # s.public_header_files = "Classes/**/*.h"
