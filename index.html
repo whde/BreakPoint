@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Breakpoint by whde</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Breakpoint</h1>
+      <h2 class="project-tagline">Objective-C版断点续传,https://github.com/whde/ResumeFromBreakPoint 为对应的Swift版本</h2>
+      <a href="https://github.com/whde/BreakPoint" class="btn">View on GitHub</a>
+      <a href="https://github.com/whde/BreakPoint/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/whde/BreakPoint/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="resumefrombreakpoint" class="anchor" href="#resumefrombreakpoint" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ResumeFromBreakPoint</h1>
+
+<p></p><p>Objective-C实现断点续传,Demo简单易懂,没有太多复杂模块和逻辑,完整体现断点续传的原理</p><p>
+</p><p><a href="https://github.com/whde/ResumeFromBreakPoint">https://github.com/whde/ResumeFromBreakPoint</a> 为对应的Swift断点续传</p><p></p>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*Objective-C*/</span>
+pod <span class="pl-s"><span class="pl-pds">'</span>BreakPoint<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>~&gt; 1.0.1<span class="pl-pds">'</span></span></pre></div>
+
+<h2>
+<a id="whdebreakpoint" class="anchor" href="#whdebreakpoint" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WhdeBreakPoint</h2>
+
+<p>简单的网络请求队列管理类,简单的管理,不做太多复杂处理</p>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*创建请求,添加请求到数组中</span>
+<span class="pl-c">WhdeSession请求失败,取消请求等需要从数组中移除*/</span>
++ (WhdeSession *)asynDownloadWithUrl:(<span class="pl-c1">NSString</span> *)urlStr progressBlock:(ProgressBlock)progress successBlock:(SuccessBlock) success failureBlock:(FailureBlock)failure;</pre></div>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*取消请求,移除数组中对应的请求*/</span>
++ (<span class="pl-k">void</span>)cancel:(<span class="pl-c1">NSString</span> *)urlStr;</pre></div>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*暂停,即为取消请求*/</span>
++ (<span class="pl-k">void</span>)pause:(<span class="pl-c1">NSString</span> *)urlStr;</pre></div>
+
+<h2>
+<a id="whdefilemanager" class="anchor" href="#whdefilemanager" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WhdeFileManager</h2>
+
+<p>断点续传专用的文件管理</p>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*根据NSURL获取存储的路径,文件不一定存在</span>
+<span class="pl-c">文件名为Url base64转换*/</span>
++ (<span class="pl-c1">NSString</span> *)filePath:(<span class="pl-c1">NSURL</span> *)url;</pre></div>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*获取对应文件的大小*/</span>
++ (<span class="pl-k">long</span> <span class="pl-k">long</span>)fileSize:(<span class="pl-c1">NSURL</span> *)url;</pre></div>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*根据url删除对应的文件*/</span>
++ (<span class="pl-k">BOOL</span>)deleteFile:(<span class="pl-c1">NSURL</span> *)url;</pre></div>
+
+<h2>
+<a id="whdesession" class="anchor" href="#whdesession" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WhdeSession</h2>
+
+<p>网络收发</p>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*创建请求,开始下载,设置已经下载的位置*/</span>
++ (<span class="pl-k">instancetype</span>)asynDownloadWithUrl:(<span class="pl-c1">NSString</span> *)urlStr progressBlock:(ProgressBlock)progress successBlock:(SuccessBlock) success failureBlock:(FailureBlock)failure callCancelBlock:(CallCancel)callCancel;</pre></div>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*取消下载*/</span>
+- (<span class="pl-k">void</span>)cancel;</pre></div>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*暂停下载即为取消下载*/</span>
+- (<span class="pl-k">void</span>)pause;</pre></div>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*出现错误,取消请求,通知失败*/</span>
+- (<span class="pl-k">void</span>)URLSession:(<span class="pl-c1">NSURLSession</span> *)session didBecomeInvalidWithError:(<span class="pl-c1">NSError</span> *)error;</pre></div>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*下载完成*/</span>
+- (<span class="pl-k">void</span>)URLSession:(<span class="pl-c1">NSURLSession</span> *)session task:(<span class="pl-c1">NSURLSessionTask</span> *)task didCompleteWithError:(<span class="pl-c1">NSError</span> *)error;</pre></div>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*接收到数据,将数据存储*/</span>
+- (<span class="pl-k">void</span>)URLSession:(<span class="pl-c1">NSURLSession</span> *)session dataTask:(<span class="pl-c1">NSURLSessionDataTask</span> *)dataTask didReceiveData:(<span class="pl-c1">NSData</span> *)data {
+<span class="pl-c1">NSHTTPURLResponse</span> *response = (<span class="pl-c1">NSHTTPURLResponse</span> *)dataTask.<span class="pl-smi">response</span>;
+<span class="pl-k">if</span> (response.<span class="pl-smi">statusCode</span> == <span class="pl-c1">200</span>) {
+<span class="pl-c">/*无断点续传时候,一直走200*/</span>
+<span class="pl-c1">_progressBlock</span>(((<span class="pl-k">float</span>)dataTask.<span class="pl-smi">countOfBytesReceived</span>)/((<span class="pl-k">float</span>)dataTask.<span class="pl-smi">countOfBytesExpectedToReceive</span>), dataTask.<span class="pl-smi">countOfBytesReceived</span>, dataTask.<span class="pl-smi">countOfBytesExpectedToReceive</span>);
+[<span class="pl-v">self</span> <span class="pl-c1">save:</span>data];
+} <span class="pl-k">else</span> <span class="pl-k">if</span> (response.<span class="pl-smi">statusCode</span> == <span class="pl-c1">206</span>) {
+<span class="pl-c">/*断点续传后,一直走206*/</span>
+<span class="pl-c1">_progressBlock</span>((((<span class="pl-k">float</span>)(dataTask.<span class="pl-smi">countOfBytesReceived</span>+_startFileSize)/(<span class="pl-k">float</span>)(dataTask.<span class="pl-smi">countOfBytesExpectedToReceive</span>+_startFileSize))), dataTask.<span class="pl-smi">countOfBytesReceived</span>, dataTask.<span class="pl-smi">countOfBytesExpectedToReceive</span>);
+[<span class="pl-v">self</span> <span class="pl-c1">save:</span>data];
+}
+}</pre></div>
+
+<div class="highlight highlight-source-objc"><pre><span class="pl-c">/*存储数据,将offset标到文件末尾,在末尾写入数据,最后关闭文件*/</span>
+- (<span class="pl-k">void</span>)save:(<span class="pl-c1">NSData</span> *)data </pre></div>
+
+<h1>
+<a id="使用" class="anchor" href="#%E4%BD%BF%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用</h1>
+
+<div class="highlight highlight-source-objc"><pre>urlStr = <span class="pl-s"><span class="pl-pds">@"</span>http://dlsw.baidu.com/sw-search-sp/soft/2a/25677/QQ_V4.1.1.1456905733.dmg<span class="pl-pds">"</span></span>;
+<span class="pl-c">/*开始下载</span>
+<span class="pl-c">继续下载*/</span>
+- (<span class="pl-k">IBAction</span>)start:(<span class="pl-k">id</span>)sender {
+[WhdeBreakPoint <span class="pl-c1">asynDownloadWithUrl:</span>urlStr <span class="pl-c1">progressBlock:</span>^(<span class="pl-k">float</span> progress, <span class="pl-k">long</span> <span class="pl-k">long</span> receiveByte, <span class="pl-k">long</span> <span class="pl-k">long</span> allByte) {
+_progressView.<span class="pl-smi">progress</span> = progress;
+_progressLabel.<span class="pl-smi">text</span> = [<span class="pl-c1">NSString</span> <span class="pl-c1">stringWithFormat:</span><span class="pl-s"><span class="pl-pds">@"</span><span class="pl-c1">%d%%</span><span class="pl-pds">"</span></span>, (<span class="pl-k">int</span>)(progress*<span class="pl-c1">100</span>)];
+} <span class="pl-c1">successBlock:</span>^(<span class="pl-c1">NSString</span> *filePath) {
+<span class="pl-c1">NSLog</span>(<span class="pl-s"><span class="pl-pds">@"</span><span class="pl-c1">%@</span><span class="pl-pds">"</span></span>, filePath);
+} <span class="pl-c1">failureBlock:</span>^(<span class="pl-c1">NSString</span> *filePath) {
+<span class="pl-c1">NSLog</span>(<span class="pl-s"><span class="pl-pds">@"</span><span class="pl-c1">%@</span><span class="pl-pds">"</span></span>, filePath);
+}];
+}
+
+- (<span class="pl-k">IBAction</span>)pause:(<span class="pl-k">id</span>)sender {
+[WhdeBreakPoint <span class="pl-c1">pause</span>:urlStr];
+}
+
+- (<span class="pl-k">IBAction</span>)delete:(<span class="pl-k">id</span>)sender {
+[WhdeFileManager <span class="pl-c1">deleteFile:</span>[<span class="pl-c1">NSURL</span> <span class="pl-c1">URLWithString:</span>urlStr]];
+}</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/whde/BreakPoint">Breakpoint</a> is maintained by <a href="https://github.com/whde">whde</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
