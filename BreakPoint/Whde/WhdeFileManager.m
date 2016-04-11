@@ -13,7 +13,7 @@
 + (NSString *)filePath:(NSURL *)url {
     NSString *path = [NSHomeDirectory() stringByAppendingString:@"/Documents/WhdeBreakPoint/" ];
     /*base64编码*/
-    NSData *data = [url.absoluteString dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [url.absoluteString.lastPathComponent dataUsingEncoding:NSUTF8StringEncoding];
     NSString *filename = [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     path = [path stringByAppendingString:filename];
     return path;
