@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-typedef void (^ProgressBlock)(float progress, long long receiveByte, long long allByte);
+typedef void (^ProgressBlock)(float progress, long long receiveByte, long long allByte,  long long rate);
 typedef void (^SuccessBlock)(NSString *filePath);
-typedef void (^FailureBlock)(NSString *filePath);
+typedef void (^FailureBlock)(NSString *filePath, NSError *error);
 typedef void (^CallCancel)(BOOL cancel);
 @interface WhdeSession : NSObject
 @property (nonatomic, copy) ProgressBlock progressBlock;
