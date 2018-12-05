@@ -1,10 +1,9 @@
 # ResumeFromBreakPoint
-<p>Objective-C实现断点续传,Demo简单易懂,没有太多复杂模块和逻辑,完整体现断点续传的原理<p>
-<p>https://github.com/whde/ResumeFromBreakPoint 为对应的Swift断点续传<p>
-```objective-c
-/*Objective-C*/
-pod 'BreakPoint', '~> 1.0.1'
-```
+Objective-C实现断点续传,Demo简单易懂,没有太多复杂模块和逻辑,完整体现断点续传的原理
+https://github.com/whde/ResumeFromBreakPoint 为对应的Swift断点续传
+
+![](https://github.com/whde/BreakPoint/BreakPoint.png)
+
 ## WhdeBreakPoint
 简单的网络请求队列管理类,简单的管理,不做太多复杂处理
 ```objective-c
@@ -61,17 +60,22 @@ WhdeSession请求失败,取消请求等需要从数组中移除*/
 ```objective-c
 /*接收到数据,将数据存储*/
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-NSHTTPURLResponse *response = (NSHTTPURLResponse *)dataTask.response;
-if (response.statusCode == 200) {
-/*无断点续传时候,一直走200*/
-_progressBlock(((float)dataTask.countOfBytesReceived)/((float)dataTask.countOfBytesExpectedToReceive), dataTask.countOfBytesReceived, dataTask.countOfBytesExpectedToReceive);
-[self save:data];
-} else if (response.statusCode == 206) {
-/*断点续传后,一直走206*/
-_progressBlock((((float)(dataTask.countOfBytesReceived+_startFileSize)/(float)(dataTask.countOfBytesExpectedToReceive+_startFileSize))), dataTask.countOfBytesReceived, dataTask.countOfBytesExpectedToReceive);
-[self save:data];
+    NSHTTPURLResponse *response = (NSHTTPURLResponse *)dataTask.response;
+    if (response.statusCode == 200) {
+        /*无断点续传时候,一直走200*/
+        if (self.progressBlock) {
+            self.progressBlock(((float)dataTask.countOfBytesReceived+self.startFileSize)/((float)(dataTask.countOfBytesExpectedToReceive+self.startFileSize)), (dataTask.countOfBytesReceived+self.startFileSize), (dataTask.countOfBytesExpectedToReceive+self.startFileSize), self.bytesPerSec);
+        }
+        [self save:data];
+    } else if (response.statusCode == 206) {
+        /*断点续传后,一直走206*/
+        if (self.progressBlock) {
+            self.progressBlock(((float)(dataTask.countOfBytesReceived+self.startFileSize)/(float)(dataTask.countOfBytesExpectedToReceive+self.startFileSize)), (dataTask.countOfBytesReceived+self.startFileSize), (dataTask.countOfBytesExpectedToReceive+self.startFileSize), self.bytesPerSec);
+        }
+        [self save:data];
+    }
 }
-}
+
 ```
 ```objective-c
 /*存储数据,将offset标到文件末尾,在末尾写入数据,最后关闭文件*/
@@ -79,25 +83,43 @@ _progressBlock((((float)(dataTask.countOfBytesReceived+_startFileSize)/(float)(d
 ```
 # 使用
 ```objective-c
-urlStr = @"http://dlsw.baidu.com/sw-search-sp/soft/2a/25677/QQ_V4.1.1.1456905733.dmg";
+urlStr = @"https://central.github.com/deployments/desktop/desktop/latest/darwin";
+urlStr1 = @"http://mac.yxdownload.com/bmc/VMwareFusionpro1012.dmg";
+
 /*开始下载
 继续下载*/
 - (IBAction)start:(id)sender {
-[WhdeBreakPoint asynDownloadWithUrl:urlStr progressBlock:^(float progress, long long receiveByte, long long allByte) {
-_progressView.progress = progress;
-_progressLabel.text = [NSString stringWithFormat:@"%d%%", (int)(progress*100)];
-} successBlock:^(NSString *filePath) {
-NSLog(@"%@", filePath);
-} failureBlock:^(NSString *filePath) {
-NSLog(@"%@", filePath);
-}];
+    __weak __typeof(self)weakSelf = self;
+    [WhdeBreakPoint asynDownloadWithUrl:urlStr progressBlock:^(float progress, long long receiveByte, long long allByte, long long rate) {
+        weakSelf.progressView.progress = progress;
+        weakSelf.progressLabel.text = [NSString stringWithFormat:@"%d%%  %@/%@ %@ ", (int)(progress*100), [WhdeNetworkService format:receiveByte], [WhdeNetworkService format:allByte], [WhdeNetworkService format:rate]];
+    } successBlock:^(NSString *filePath) {
+        NSLog(@"%@", filePath);
+    } failureBlock:^(NSString *filePath, NSError *error) {
+        NSLog(@"%@\n%@", filePath, error);
+    }];
+    [WhdeBreakPoint asynDownloadWithUrl:urlStr1 progressBlock:^(float progress, long long receiveByte, long long allByte, long long rate) {
+        weakSelf.progressView1.progress = progress;
+        weakSelf.progressLabel1.text = [NSString stringWithFormat:@"%d%%  %@/%@ %@ ", (int)(progress*100), [WhdeNetworkService format:receiveByte], [WhdeNetworkService format:allByte], [WhdeNetworkService format:rate]];
+    } successBlock:^(NSString *filePath) {
+        NSLog(@"%@", filePath);
+    } failureBlock:^(NSString *filePath, NSError *error) {
+        NSLog(@"%@\n%@", filePath, error);
+    }];
 }
 
 - (IBAction)pause:(id)sender {
-[WhdeBreakPoint pause:urlStr];
+    [WhdeBreakPoint pause:urlStr];
+    [WhdeBreakPoint pause:urlStr1];
 }
 
 - (IBAction)delete:(id)sender {
-[WhdeFileManager deleteFile:[NSURL URLWithString:urlStr]];
+    [WhdeFileManager deleteFile:[NSURL URLWithString:urlStr]];
+    [WhdeFileManager deleteFile:[NSURL URLWithString:urlStr1]];
+    self.progressView.progress = 0;
+    self.progressView1.progress = 0;
+    self.progressLabel.text = @"0%";
+    self.progressLabel1.text = @"0%";
 }
+
 ```

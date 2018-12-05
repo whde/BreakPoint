@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CBD62DC21B672D5000AF9B1 /* WhdeNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD62DB21B672D5000AF9B1 /* WhdeNetworkService.m */; };
 		F8C960C41CA4E26E0098ECD2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C960C31CA4E26E0098ECD2 /* main.m */; };
 		F8C960C71CA4E26E0098ECD2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C960C61CA4E26E0098ECD2 /* AppDelegate.m */; };
 		F8C960CA1CA4E26E0098ECD2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C960C91CA4E26E0098ECD2 /* ViewController.m */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4CBD62DA21B672D5000AF9B1 /* WhdeNetworkService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WhdeNetworkService.h; sourceTree = "<group>"; };
+		4CBD62DB21B672D5000AF9B1 /* WhdeNetworkService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WhdeNetworkService.m; sourceTree = "<group>"; };
 		F8C960BF1CA4E26E0098ECD2 /* BreakPoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakPoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8C960C31CA4E26E0098ECD2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F8C960C51CA4E26E0098ECD2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -98,6 +101,8 @@
 				F8C960DE1CA4E38D0098ECD2 /* WhdeFileManager.m */,
 				F8C960E01CA4E3990098ECD2 /* WhdeSession.h */,
 				F8C960E11CA4E3990098ECD2 /* WhdeSession.m */,
+				4CBD62DA21B672D5000AF9B1 /* WhdeNetworkService.h */,
+				4CBD62DB21B672D5000AF9B1 /* WhdeNetworkService.m */,
 			);
 			path = Whde;
 			sourceTree = "<group>";
@@ -128,11 +133,12 @@
 		F8C960B71CA4E26E0098ECD2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = whde;
 				TargetAttributes = {
 					F8C960BE1CA4E26E0098ECD2 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = LP6RFHXTZE;
 					};
 				};
 			};
@@ -178,6 +184,7 @@
 				F8C960DF1CA4E38D0098ECD2 /* WhdeFileManager.m in Sources */,
 				F8C960DC1CA4E37B0098ECD2 /* WhdeBreakPoint.m in Sources */,
 				F8C960C41CA4E26E0098ECD2 /* main.m in Sources */,
+				4CBD62DC21B672D5000AF9B1 /* WhdeNetworkService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,13 +219,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -257,13 +274,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -291,9 +318,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = LP6RFHXTZE;
 				INFOPLIST_FILE = BreakPoint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ziyoubang.BreakPoint;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Whde.BreakPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -302,9 +330,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = LP6RFHXTZE;
 				INFOPLIST_FILE = BreakPoint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ziyoubang.BreakPoint;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Whde.BreakPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
